@@ -1,0 +1,46 @@
+name: setin
+version: 1
+accesskey: l2z3xzl04x
+handle:
+#绑定子域名 joke
+- rewrite: if ( in_header["host"] ~ "joke.setin.cn" &&  path ~ "^(([0-9])+).html$" ) goto "joke/article.php?num=$1"
+- rewrite: if ( in_header["host"] ~ "joke.setin.cn" &&  path ~ "^/$" ) goto "joke/index.php"
+- rewrite: if ( in_header["host"] ~ "joke.setin.cn" &&  path ~ "^p/(([0-9])+).html$"  ) goto "joke/index.php?page=$1&%{QUERY_STRING}"
+- rewrite: if ( in_header["host"] ~ "joke.setin.cn" &&  path  == "/sitemap.xml" ) goto "joke/sitemap.php"
+#绑定子域名soup
+- rewrite: if ( in_header["host"] ~ "soup.setin.cn" &&  path ~ "^(([0-9])+).html$" ) goto "soup/article.php?num=$1"
+- rewrite: if ( in_header["host"] ~ "soup.setin.cn" &&  path ~ "^p/(([0-9])+).html$"  ) goto "soup/index.php?page=$1&%{QUERY_STRING}"
+- rewrite: if ( in_header["host"] ~ "soup.setin.cn" &&  path ~ "^/$" ) goto "soup/index.php"
+
+#绑定子域名www
+- rewrite: if ( in_header["host"] ~ "www.setin.cn" &&  path ~ "^(([0-9])+).html$" ) goto "www/article.php?num=$1"
+- rewrite: if ( in_header["host"] ~ "www.setin.cn" &&  path ~ "^/$" ) goto "www/article.php"
+- rewrite: if ( in_header["host"] ~ "www.setin.cn" &&  path  == "/sitemap.xml" ) goto "www/sitemap.php"
+- rewrite: if ( in_header["host"] ~ "^setin.cn" && path ~ "^(.*)$") goto "http://www.setin.cn$1 [L,QSA,R=301]"
+
+
+#绑定子域名api
+- rewrite: if ( in_header["host"] ~ "api.setin.cn" &&  path  == "/" ) goto "api/index.php"
+- rewrite: if ( in_header["host"] ~ "api.setin.cn" &&  path  == "/qrcode.png" ) goto "api/qrcode/get.php"
+- rewrite: if ( in_header["host"] ~ "api.setin.cn" &&  path  == "/weixin.html" ) goto "api/weixin/requestYX.php"
+- rewrite: if ( in_header["host"] ~ "api.setin.cn" &&  path  == "/3g6p.html" ) goto "api/3g6p/family_relation.php"
+
+- compress: if ( out_header["Content-type"] ~ "text/css" ) compress
+- compress: if ( out_header["Content-type"] ~ "text/javascript" ) compress
+- compress: if ( out_header["Content-type"] ~ "application/octet-stream" ) compress
+- compress: if ( out_header["Content-type"] ~ "text/html" ) compress
+- compress: if ( out_header["Content-type"] ~ "image/jpeg" ) compress
+- compress: if ( out_header["Content-type"] ~ "image/png" ) compress
+- compress: if ( out_header["Content-type"] ~ "image/gif" ) compress
+- compress: if ( out_header["Content-type"] ~ "image/bmp" ) compress
+- compress: if ( out_header["Content-type"] ~ "application/x-shockwave-flash" ) compress
+- directoryindex: index.php
+- errordoc:  404 /res/404.html
+
+cron:
+    - description: mryw_crontab_random
+      url: crontabs/mryw_spider_cron.php
+      schedule: */1 * * * *
+    - description: mryw_crontab_today
+      url: crontabs/mryw_today_spider_cron.php
+      schedule: 30 4 * * *
