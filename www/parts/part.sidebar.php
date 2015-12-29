@@ -15,6 +15,7 @@
         <ul>
 			<li>
 				<a href="http://www.atool.org/" target="_blank" title="最全面、最干净的在线工具">在线工具</a>、
+				<a href="http://placeholder.cn/" target="_blank" title="client side image placeholders">placeholder.js</a>、
 				<a href="http://api.setin.cn/" target="_blank" title="开放创想 - SETIN">开放创想</a>、
 				<a href="http://joke.setin.cn/" target="_blank" title="全网最全面的笑话数据库 - 每五分钟更新">笑话数据库</a>、
 				<a href="http://soup.setin.cn/" target="_blank" title="心灵鸡汤">心灵鸡汤</a>
